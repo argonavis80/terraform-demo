@@ -30,7 +30,7 @@ resource "aws_instance" "xps-server" {
   iam_instance_profile        = "${aws_iam_instance_profile.n4-instance-profile.name}"
 
   tags = {
-    Name        = "xps-server"
+    Name        = "${local.env_name_lowercase}-xps-server"
     Application = "N4"
     Environment = "${local.env_name_lowercase}"
     CreatedBy   = "Terraform"
