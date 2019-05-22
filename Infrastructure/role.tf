@@ -1,10 +1,10 @@
-resource "aws_iam_role" "cluster-node-instance-role" {
-  name               = "${local.env_name_lowercase}-cluster-node-instance-role"
+resource "aws_iam_role" "n4-instance-role" {
+  name               = "${local.env_name_lowercase}-n4-instance-role"
   path               = "/"
-  assume_role_policy = "${data.aws_iam_policy_document.cluster-node-instance-policy.json}"
+  assume_role_policy = "${data.aws_iam_policy_document.n4-instance-policy.json}"
 }
 
-data "aws_iam_policy_document" "cluster-node-instance-policy" {
+data "aws_iam_policy_document" "n4-instance-policy" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -15,8 +15,8 @@ data "aws_iam_policy_document" "cluster-node-instance-policy" {
   }
 }
 
-resource "aws_iam_instance_profile" "cluster-node-instance-profile" {
-  name = "${local.env_name_lowercase}-cluster-node-instance-profile"
+resource "aws_iam_instance_profile" "n4-instance-profile" {
+  name = "${local.env_name_lowercase}-n4-instance-profile"
   path = "/"
-  role = "${aws_iam_role.cluster-node-instance-role.id}"
+  role = "${aws_iam_role.n4-instance-role.id}"
 }
