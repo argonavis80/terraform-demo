@@ -23,7 +23,7 @@ resource "aws_security_group" "center-nodes" {
 
 resource "aws_instance" "center-node" {
   instance_type               = "t3.micro"
-  ami                         = "ami-0ebb3a801d5fb8b9b"
+  ami                         = "ami-0009a33f033d8b7b6"
   subnet_id                   = "${module.network.subnet-private-ids[2]}"
   vpc_security_group_ids      = ["${aws_security_group.center-nodes.id}"]
   associate_public_ip_address = false

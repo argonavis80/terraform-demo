@@ -1,6 +1,6 @@
-resource "aws_security_group" "xps-servers" {
-  name        = "${local.env_name_lowercase}-xps-servers"
-  description = "Security group for XPS servers (${local.env_name_lowercase})."
+resource "aws_security_group" "billing-servers" {
+  name        = "${local.env_name_lowercase}-billing-servers"
+  description = "Security group for billing servers (${local.env_name_lowercase})."
   vpc_id      = "${module.network.vpc-id}"
 
   ingress {
@@ -9,7 +9,7 @@ resource "aws_security_group" "xps-servers" {
     protocol  = "6"
 
     security_groups = [
-      "${aws_security_group.center-nodes.id}"
+      "${aws_security_group.n4-data.id}"
     ]
   }
 
@@ -21,16 +21,16 @@ resource "aws_security_group" "xps-servers" {
   }
 }
 
-resource "aws_instance" "xps-server" {
+resource "aws_instance" "billing-server" {
   instance_type               = "t3.micro"
   ami                         = "ami-0009a33f033d8b7b6"
   subnet_id                   = "${module.network.subnet-private-ids[2]}"
-  vpc_security_group_ids      = ["${aws_security_group.xps-servers.id}"]
+  vpc_security_group_ids      = ["${aws_security_group.billing-servers.id}"]
   associate_public_ip_address = false
   iam_instance_profile        = "${aws_iam_instance_profile.n4-instance-profile.name}"
 
   tags = {
-    Name        = "${local.env_name_lowercase}-xps-server"
+    Name        = "${local.env_name_lowercase}-billing-server"
     Application = "N4"
     Environment = "${local.env_name_lowercase}"
     CreatedBy   = "Terraform"
